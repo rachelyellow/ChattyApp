@@ -24,8 +24,19 @@ componentDidMount() {
     "ws://localhost:3001"
   );
     this.socket.onmessage = returnMsg => {
-      const messages = this.state.messages.concat(JSON.parse(returnMsg.data));
-      this.setState({messages: messages});
+      const data = JSON.parse(returnMsg.data);
+      switch (data.type) {
+        case "incomingUserCount":
+          this.setState({usersOnline: data.users.toString()});
+        break;
+
+        case "incomingMessage":
+        case "incomingNotification":
+          const messages = this.state.messages.concat(data);
+          this.setState({messages: messages});
+        break;
+
+      }
     }
 }
 

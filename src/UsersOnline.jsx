@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class UsersOnline extends Component {
   render() {
     return (
-      <div>{numOfUsers} users online<div>
+      <div id="userCount">{this.props.numOfUsers} users online</div>
     );
   }
 }
