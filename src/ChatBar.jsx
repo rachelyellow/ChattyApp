@@ -3,30 +3,21 @@ import React, {Component} from 'react';
 class ChatBar extends Component {
   constructor() {
     super();
-    this.state = {
-      value: '',
-      currentUser: 'Anonymous'
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUsernameInput = this.handleUsernameInput.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
 
-  handleSubmit(event) {
+  handleMsgSubmit = event => {
     if (event.key === 'Enter') {
-      console.log(event);
-      this.props.addMessage(this.state.value, this.state.currentUser);
-      this.setState({value: ''});
+      this.props.addUserMessage(event.target.value);
+      event.target.value = '';
     }
   }
 
-  handleUsernameInput(event) {
-      this.setState({currentUser: event.target.value})
+  handleUsernameInput = event => {
+    if (event.key === 'Enter') {
+      this.props.updateUser(event.target.value);
+      this.props.addSystemMessage(event.target.value);
+    }
   }
 
   render() {
@@ -35,13 +26,11 @@ class ChatBar extends Component {
         <input
           className="chatbar-username"
           placeholder="Your Name (Optional)"
-          onChange={this.handleUsernameInput} />
+          onKeyPress={this.handleUsernameInput} />
         <input
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
-          onKeyPress={this.handleSubmit}
-          onChange={this.handleChange}
-          value={this.state.value} />
+          onKeyPress={this.handleMsgSubmit} />
       </footer>
     );
   }

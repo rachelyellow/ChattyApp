@@ -4,7 +4,7 @@ class Message extends Component {
   render() {
     return (
       <li className="message">
-        <span className="message-username">{this.props.data.username}</span>
+      { this.props.data.username ? <span className="message-username">{this.props.data.username}</span> : null}
         <span className="message-content">{this.props.data.content}</span>
       </li>
     );
