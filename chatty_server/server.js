@@ -16,6 +16,8 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+const colorArray = ["red", "blue", "green", "purple", "pink", "orange"];
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
@@ -29,13 +31,25 @@ wss.on('connection', (ws) => {
     };
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
-        totalUsers.users += 1;
+        totalUsers.users = wss.clients.size;
         client.send(JSON.stringify(totalUsers));
-    }});
+      }});
   }
   
+ 
+
+  function assignColor () {
+    const randomNum = Math.floor((Math.random() * 5) + 1);
+    const randomColor = colorArray[randomNum];
+    let assignedColor = {
+      type: "incomingColorAssign",
+      color: randomColor
+    }
+    ws.send(JSON.stringify(assignedColor));
+  }
+
+  assignColor();
   updateNumOfUsers();
-  
   function transformUserMsg (message) {
     const id = uuidv1();
     const returnMsg = JSON.parse(message);

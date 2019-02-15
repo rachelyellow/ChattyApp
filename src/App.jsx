@@ -12,7 +12,7 @@ class App extends Component {
         name: "Anonymous"
       },
       messages: [],
-      usersOnline: ""
+      handleColor: null
     }
   }
 
@@ -26,6 +26,10 @@ componentDidMount() {
     this.socket.onmessage = returnMsg => {
       const data = JSON.parse(returnMsg.data);
       switch (data.type) {
+        case "incomingColorAssign":
+          this.setState({handleColor: data.color});
+        break;
+
         case "incomingUserCount":
           this.setState({usersOnline: data.users.toString()});
         break;
@@ -82,7 +86,7 @@ addSystemMessage = (newUsername) => {
           <a href="/" className="navbar-brand">Chatty</a>
           <UsersOnline numOfUsers={this.state.usersOnline} />
         </nav>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} userColor={this.state.handleColor} />
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
       </div>
     );
