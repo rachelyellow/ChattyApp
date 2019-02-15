@@ -23,7 +23,6 @@ const colorArray = ["red", "blue", "green", "purple", "pink", "orange"];
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
-
   function updateNumOfUsers () {
     let totalUsers = {
       type: "incomingUserCount",
@@ -34,26 +33,23 @@ wss.on('connection', (ws) => {
         totalUsers.users = wss.clients.size;
         client.send(JSON.stringify(totalUsers));
       }});
-  }
-  
- 
+    }
+    
+    updateNumOfUsers();
+    ws.color = assignColor();
 
   function assignColor () {
     const randomNum = Math.floor((Math.random() * 5) + 1);
     const randomColor = colorArray[randomNum];
-    let assignedColor = {
-      type: "incomingColorAssign",
-      color: randomColor
-    }
-    ws.send(JSON.stringify(assignedColor));
+    return randomColor;
   }
 
-  assignColor();
-  updateNumOfUsers();
+
   function transformUserMsg (message) {
     const id = uuidv1();
     const returnMsg = JSON.parse(message);
     returnMsg["id"] = id;
+    returnMsg["color"] = ws.color;
     returnMsg["type"] = "incomingMessage"
     return JSON.stringify(returnMsg);
   }

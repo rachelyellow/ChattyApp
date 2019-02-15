@@ -12,7 +12,6 @@ class App extends Component {
         name: "Anonymous"
       },
       messages: [],
-      handleColor: null
     }
   }
 
@@ -26,10 +25,6 @@ componentDidMount() {
     this.socket.onmessage = returnMsg => {
       const data = JSON.parse(returnMsg.data);
       switch (data.type) {
-        case "incomingColorAssign":
-          this.setState({handleColor: data.color});
-        break;
-
         case "incomingUserCount":
           this.setState({usersOnline: data.users.toString()});
         break;
@@ -38,6 +33,7 @@ componentDidMount() {
         case "incomingNotification":
           const messages = this.state.messages.concat(data);
           this.setState({messages: messages});
+          console.log(this.state);
         break;
 
       }
@@ -57,12 +53,14 @@ updateUser = (newUsername) => {
 
 //sends user msg to server
 addUserMessage = (message) => {
-  const newMessage = {
-    type: 'postMessage',
-    username: this.state.currentUser.name,
-    content: message
+  if (message.trim() !== "") {
+    const newMessage = {
+      type: 'postMessage',
+      username: this.state.currentUser.name,
+      content: message
+    }
+    this.socket.send(JSON.stringify(newMessage));
   }
-  this.socket.send(JSON.stringify(newMessage));
 }
 
 //sends updated username to server
@@ -86,7 +84,7 @@ addSystemMessage = (newUsername) => {
           <a href="/" className="navbar-brand">Chatty</a>
           <UsersOnline numOfUsers={this.state.usersOnline} />
         </nav>
-        <MessageList messages={this.state.messages} userColor={this.state.handleColor} />
+        <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
       </div>
     );
