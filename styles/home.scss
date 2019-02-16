@@ -46,6 +46,7 @@ body {
 .message {
   display: flex;
   padding: 5px;
+  flex-wrap: wrap;
 }
 
 .message.system {
@@ -62,6 +63,20 @@ body {
 
 .message-content {
   flex: 8;
+  padding: 0;
+  margin: 5 0px;
+}
+
+.message-img-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.message-img {
+  max-width: 60%;
+  padding-top: 1em;
+  height: auto;
 }
 
 .message-username {

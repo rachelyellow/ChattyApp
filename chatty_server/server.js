@@ -34,9 +34,26 @@ wss.on('connection', (ws) => {
         client.send(JSON.stringify(totalUsers));
       }});
     }
+
+    function updateUserList () {
+      let activeUsers = {
+        type: "incomingUserList",
+        users: []
+      }
+      wss.clients.forEach((client) => {
+        if (client.readyState === ws.OPEN) {
+          activeUsers.users.push(client.userHandle);
+        }
+        const activeUserList = JSON.stringify(activeUsers);
+        client.send(activeUserList);
+      })
+    }
+
     
     updateNumOfUsers();
     ws.color = assignColor();
+    ws.userHandle = "Anonymous";
+    updateUserList();
 
   function assignColor () {
     const randomNum = Math.floor((Math.random() * 5) + 1);
@@ -57,6 +74,7 @@ wss.on('connection', (ws) => {
   function transformSystemMsg (message) {
     const returnMsg = JSON.parse(message);
     returnMsg["type"] = "incomingNotification"
+    ws.userHandle = returnMsg.userHandle;
     return JSON.stringify(returnMsg);
   }
   
@@ -67,6 +85,7 @@ wss.on('connection', (ws) => {
       returnMsg = transformUserMsg(message);
     } else {
       returnMsg = transformSystemMsg(message);
+      updateUserList();
     }
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
@@ -79,5 +98,6 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
       console.log('Client disconnected')
       updateNumOfUsers();
+      updateUserList();
     });
   });

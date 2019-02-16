@@ -26,14 +26,17 @@ componentDidMount() {
       const data = JSON.parse(returnMsg.data);
       switch (data.type) {
         case "incomingUserCount":
-          this.setState({usersOnline: data.users.toString()});
+          this.setState({usersOnline: data.users});
+        break;
+
+        case "incomingUserList":
+          this.setState({activeUsers: data.users})
         break;
 
         case "incomingMessage":
         case "incomingNotification":
           const messages = this.state.messages.concat(data);
           this.setState({messages: messages});
-          console.log(this.state);
         break;
 
       }
@@ -70,7 +73,8 @@ addSystemMessage = (newUsername) => {
     const systemMsg = `${user} has changed their name to ${newUsername}.`
     const newMessage = {
       type: 'postNotification',
-      content: systemMsg
+      content: systemMsg,
+      userHandle: newUsername
     }
     this.socket.send(JSON.stringify(newMessage));
   }
@@ -82,7 +86,7 @@ addSystemMessage = (newUsername) => {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-          <UsersOnline numOfUsers={this.state.usersOnline} />
+          <UsersOnline numOfUsers={this.state.usersOnline} activeUsers={this.state.activeUsers} />
         </nav>
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
