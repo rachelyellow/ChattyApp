@@ -56,7 +56,7 @@ wss.on('connection', (ws) => {
     updateUserList();
 
   function assignColor () {
-    const randomNum = Math.floor((Math.random() * 7) + 1);
+    const randomNum = Math.floor(Math.random() * 8);
     const randomColor = colorArray[randomNum];
     return randomColor;
   }
