@@ -16,7 +16,7 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-const colorArray = ["red", "blue", "green", "purple", "pink", "orange"];
+const colorArray = ["red", "blue", "green", "purple", "pink", "orange", "brown", "yellow"];
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -56,7 +56,7 @@ wss.on('connection', (ws) => {
     updateUserList();
 
   function assignColor () {
-    const randomNum = Math.floor((Math.random() * 5) + 1);
+    const randomNum = Math.floor((Math.random() * 7) + 1);
     const randomColor = colorArray[randomNum];
     return randomColor;
   }
