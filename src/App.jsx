@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MessageList from "./MessageList.jsx";
 import ChatBar from "./ChatBar.jsx";
 import UsersOnline from "./UsersOnline.jsx";
+import UserHandles from "./UserHandles.jsx";
 
 
 class App extends Component {
@@ -86,8 +87,9 @@ addSystemMessage = (newUsername) => {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-          <UsersOnline numOfUsers={this.state.usersOnline} activeUsers={this.state.activeUsers} />
+          <UsersOnline numOfUsers={this.state.usersOnline} />
         </nav>
+        <UserHandles activeUsers={this.state.activeUsers} />
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
       </div>
