@@ -1,21 +1,29 @@
-React Boilerplate
+ChattyApp
 =====================
 
-A minimal and light dev environment for ReactJS.
+A chat application that allows users to connect to a server and chat in real-time via WebSockets.
+
+### Final Product
+!["Chatty messages demo"](https://github.com/rachelyellow/ChattyApp/blob/master/pics/Chatty%20Demo.gif?raw=true)
+
 
 ### Usage
 
-Clone the boilerplate and create your own git repo.
+Clone ChattyApp.
 
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
+git clone git@github.com:rachelyellow/ChattyApp.git
+
 ```
 
-Install the dependencies and start the server.
+Install all dependencies in the chatty_server folder using npm install.
+
+```
+cd chatty_server
+npm install
+```
+
+In the project 'root' folder, install the dependencies and run the server on your browser.
 
 ```
 npm install
@@ -23,23 +31,25 @@ npm start
 open http://localhost:3000
 ```
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
 
 ### Dependencies
 
-* React
-* Webpack
+* babel-core
 * [babel-loader](https://github.com/babel/babel-loader)
+* babel-preset-es2015
+* babel-preset-react
+* css-loader
+* node-sass
+* sass-loader
+* sockjs-client
+* style-loader
+* webpack
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* react
+* react-dom
+* express
+* uuid
+* ws
+
+
+
