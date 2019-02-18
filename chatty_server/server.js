@@ -47,7 +47,6 @@ wss.on('connection', (ws) => {
       }
     })
     const activeUserList = JSON.stringify(activeUsers);
-    console.log(activeUserList);
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         client.send(activeUserList);
