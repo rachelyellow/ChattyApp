@@ -9,6 +9,10 @@ body {
   margin: 70px 0;
 }
 
+
+
+
+
 #userCount {
   float: right;
   padding: 1.6em;
@@ -43,6 +47,25 @@ body {
   flex: 2;
 }
 
+.handles-container {
+  right: 0;
+  flex: 2;
+  width: 15%;
+}
+
+.user-handle {
+  list-style: none;
+}
+
+#chat-window {
+  display: flex;
+
+}
+.messages {
+  flex: 8;
+  max-width: 80%;
+}
+
 .message {
   display: flex;
   padding: 5px;
@@ -62,9 +85,10 @@ body {
 }
 
 .message-content {
-  flex: 8;
   padding: 0;
   margin: 5 0px;
+  word-wrap: break-word;
+  flex: 9;
 }
 
 .message-img-container {
@@ -80,8 +104,8 @@ body {
 }
 
 .message-username {
-  flex: 2;
   font-weight: 700;
+  flex: 1;
 }
 
 .navbar {

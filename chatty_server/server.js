@@ -28,32 +28,38 @@ wss.on('connection', (ws) => {
       type: "incomingUserCount",
       users: 0
     };
+
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         totalUsers.users = wss.clients.size;
         client.send(JSON.stringify(totalUsers));
-      }});
+    }});
+  }
+
+  function updateUserList () {
+    let activeUsers = {
+      type: "incomingUserList",
+      users: []
     }
+    wss.clients.forEach((client) => {
+      if (client.readyState === ws.OPEN) {
+        activeUsers.users.push({handle: client.userHandle, color: client.color});
+      }
+    })
+    const activeUserList = JSON.stringify(activeUsers);
+    console.log(activeUserList);
+    wss.clients.forEach((client) => {
+      if (client.readyState === ws.OPEN) {
+        client.send(activeUserList);
+      }
+    })
+  }
 
-    // function updateUserList () {
-    //   let activeUsers = {
-    //     type: "incomingUserList",
-    //     users: []
-    //   }
-    //   wss.clients.forEach((client) => {
-    //     if (client.readyState === ws.OPEN) {
-    //       activeUsers.users.push(client.userHandle);
-    //       const activeUserList = JSON.stringify(activeUsers);
-    //       client.send(activeUserList);
-    //     }
-    //   })
-    // }
-
-    
-    updateNumOfUsers();
-    // ws.userHandle = "Anonymous";
-    ws.color = assignColor();
-    // updateUserList();
+  
+  updateNumOfUsers();
+  ws.userHandle = "Anonymous";
+  ws.color = assignColor();
+  updateUserList();
 
   function assignColor () {
     const randomNum = Math.floor(Math.random() * 9);
@@ -85,7 +91,7 @@ wss.on('connection', (ws) => {
       returnMsg = transformUserMsg(message);
     } else {
       returnMsg = transformSystemMsg(message);
-      // updateUserList();
+      updateUserList();
     }
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
@@ -98,6 +104,6 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
       console.log('Client disconnected')
       updateNumOfUsers();
-      // updateUserList();
+      updateUserList();
     });
   });
