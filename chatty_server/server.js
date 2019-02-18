@@ -16,7 +16,7 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-const colorArray = ["red", "blue", "green", "purple", "pink", "orange", "brown", "yellow"];
+const colorArray = ["red", "blue", "green", "purple", "pink", "orange", "brown", "yellow", "gray"];
 
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -35,28 +35,28 @@ wss.on('connection', (ws) => {
       }});
     }
 
-    function updateUserList () {
-      let activeUsers = {
-        type: "incomingUserList",
-        users: []
-      }
-      wss.clients.forEach((client) => {
-        if (client.readyState === ws.OPEN) {
-          activeUsers.users.push(client.userHandle);
-        }
-        const activeUserList = JSON.stringify(activeUsers);
-        client.send(activeUserList);
-      })
-    }
+    // function updateUserList () {
+    //   let activeUsers = {
+    //     type: "incomingUserList",
+    //     users: []
+    //   }
+    //   wss.clients.forEach((client) => {
+    //     if (client.readyState === ws.OPEN) {
+    //       activeUsers.users.push(client.userHandle);
+    //       const activeUserList = JSON.stringify(activeUsers);
+    //       client.send(activeUserList);
+    //     }
+    //   })
+    // }
 
     
     updateNumOfUsers();
+    // ws.userHandle = "Anonymous";
     ws.color = assignColor();
-    ws.userHandle = "Anonymous";
-    updateUserList();
+    // updateUserList();
 
   function assignColor () {
-    const randomNum = Math.floor(Math.random() * 8);
+    const randomNum = Math.floor(Math.random() * 9);
     const randomColor = colorArray[randomNum];
     return randomColor;
   }
@@ -85,7 +85,7 @@ wss.on('connection', (ws) => {
       returnMsg = transformUserMsg(message);
     } else {
       returnMsg = transformSystemMsg(message);
-      updateUserList();
+      // updateUserList();
     }
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
@@ -98,6 +98,6 @@ wss.on('connection', (ws) => {
     ws.on('close', () => {
       console.log('Client disconnected')
       updateNumOfUsers();
-      updateUserList();
+      // updateUserList();
     });
   });

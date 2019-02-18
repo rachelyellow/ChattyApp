@@ -30,9 +30,9 @@ componentDidMount() {
           this.setState({usersOnline: data.users});
         break;
 
-        case "incomingUserList":
-          this.setState({activeUsers: data.users})
-        break;
+        // case "incomingUserList":
+        //   this.setState({activeUsers: data.users})
+        // break;
 
         case "incomingMessage":
         case "incomingNotification":
@@ -89,8 +89,10 @@ addSystemMessage = (newUsername) => {
           <a href="/" className="navbar-brand">Chatty</a>
           <UsersOnline numOfUsers={this.state.usersOnline} />
         </nav>
-        <UserHandles activeUsers={this.state.activeUsers} />
         <MessageList messages={this.state.messages} />
+        {/* new feature in the making */}
+        {/* {console.log("active users: ", this.state.activeUsers)} */}
+        {/* <UserHandles activeUsers={this.state.activeUsers} /> */}
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
       </div>
     );
