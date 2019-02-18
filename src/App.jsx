@@ -91,12 +91,14 @@ addSystemMessage = (newUsername) => {
           <UsersOnline numOfUsers={this.state.usersOnline} />
         </nav>
         <div id="chat-window">
+        <div id="messages-container">
           <MessageList messages={this.state.messages} />
-          {/* new feature in the making */}
-          {console.log("active users: ", this.state.activeUsers)}
-          <UserHandles activeUsers={this.state.activeUsers} />
-          <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
         </div>
+          <div id="users-container">
+            <UserHandles activeUsers={this.state.activeUsers} />
+          </div>
+        </div>
+        <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
       </div>
     );
   }

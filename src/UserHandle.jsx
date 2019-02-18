@@ -4,7 +4,7 @@ class UserHandle extends Component {
   render() {
     return (
         <li className="user-handle" style={{color: this.props.activeUser.color}}>
-            {this.props.activeUser.handle}
+            <b>{this.props.activeUser.handle}</b>
         </li>
     );
   }
