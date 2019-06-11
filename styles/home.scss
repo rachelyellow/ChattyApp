@@ -17,7 +17,7 @@ body {
 }
 
 .chatbar {
-  background: tomato;
+  background-image: linear-gradient(to right top, #71e0dd, #84e8e6, #95efee, #a6f7f7, #b7ffff);
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -134,7 +134,7 @@ body {
 }
 
 .navbar {
-  background: tomato;
+  background-image: linear-gradient(to right top, #71e0dd, #84e8e6, #95efee, #a6f7f7, #b7ffff);
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;

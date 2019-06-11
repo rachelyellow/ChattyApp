@@ -16,14 +16,15 @@ git clone git@github.com:rachelyellow/ChattyApp.git
 
 ```
 
-Install all dependencies in the chatty_server folder using npm install.
+Install all dependencies in the chatty_server folder using npm install and run the chat server.
 
 ```
 cd chatty_server
 npm install
+npm start
 ```
 
-In the project 'root' folder, install the dependencies and run the server on your browser.
+In the project 'root' folder, install the dependencies and run the front end server on your browser.
 
 ```
 npm install
