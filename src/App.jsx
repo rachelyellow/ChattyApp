@@ -13,7 +13,8 @@ class App extends Component {
         name: "Anonymous"
       },
       messages: [],
-      activeUsers: []
+      activeUsers: [],
+      userHandlesActive: false
     }
   }
 
@@ -82,20 +83,29 @@ addSystemMessage = (newUsername) => {
   }
 }
 
+// toggles list of active users
+toggleUserList = () => {
+  if (this.state.userHandlesActive) {
+    this.setState({ userHandlesActive: false });
+  } else {
+    this.setState({ userHandlesActive: true });
+  }
+}
+
 
   render() {
     return (
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-          <UsersOnline numOfUsers={this.state.usersOnline} />
+          <UsersOnline numOfUsers={this.state.usersOnline} toggleUserList={this.toggleUserList} />
         </nav>
         <div id="chat-window">
         <div id="messages-container">
           <MessageList messages={this.state.messages} />
         </div>
           <div id="users-container">
-            <UserHandles activeUsers={this.state.activeUsers} />
+            <UserHandles activeUsers={this.state.activeUsers} active={this.state.userHandlesActive} />
           </div>
         </div>
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
