@@ -19,7 +19,6 @@ class App extends Component {
   }
 
 
-
 componentDidMount() {
   console.log("componentDidMount App");
   this.socket = new WebSocket(
@@ -105,7 +104,7 @@ toggleUserList = () => {
           <MessageList messages={this.state.messages} />
         </div>
           <div id="users-container">
-            <UserHandles activeUsers={this.state.activeUsers} active={this.state.userHandlesActive} />
+            <UserHandles className="users-container" activeUsers={this.state.activeUsers} active={this.state.userHandlesActive} />
           </div>
         </div>
         <ChatBar currentUser={this.state.currentUser} addUserMessage={this.addUserMessage} addSystemMessage={this.addSystemMessage} updateUser={this.updateUser} />
